@@ -6,7 +6,10 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: url('./assets/background.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -16,7 +19,7 @@ body {
 
 #app {
     width: 100%;
-    max-width: 600px;
+    max-width: 480px;
 }
 
 .container {
