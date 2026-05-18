@@ -1,4 +1,4 @@
-import { Devotional } from '../types/index';
+import { Chapter } from '../types/index';
 
 class DevotionalDisplay {
     private displayElement: HTMLElement;
@@ -12,21 +12,14 @@ class DevotionalDisplay {
         return this.displayElement;
     }
 
-    update(devotional: Devotional): void {
-        const today = new Date();
-        const dateString = today.toLocaleDateString('ko-KR', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric',
-            weekday: 'long'
-        });
+    update(chapter: Chapter): void {
+        const versesHTML = chapter.verses
+            .map(v => `<div class="verse"><span class="verse-number">${v.number}</span>${v.text}</div>`)
+            .join('');
 
         this.displayElement.innerHTML = `
-            <div class="scripture">
-                <div class="scripture-reference">${devotional.reference}</div>
-                <div class="scripture-text">"${devotional.text}"</div>
-                <div class="date">${dateString}</div>
-            </div>
+            <div class="chapter-title">${chapter.title}</div>
+            <div class="verses-scroll">${versesHTML}</div>
         `;
     }
 }

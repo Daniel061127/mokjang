@@ -1,6 +1,6 @@
 import { Button } from './components/Button';
 import { DevotionalDisplay } from './components/DevotionalDisplay';
-import { getRandomDevotional } from './services/devotionalService';
+import { getRandomChapter } from './services/devotionalService';
 
 const app = document.getElementById('app')!;
 
@@ -16,8 +16,8 @@ const devotionalDisplay = new DevotionalDisplay();
 
 async function handleButtonClick() {
     try {
-        const todaysDevotional = await getRandomDevotional();
-        devotionalDisplay.update(todaysDevotional);
+        const chapter = await getRandomChapter();
+        devotionalDisplay.update(chapter);
     } catch (error) {
         console.error('말씀을 불러오는 중 오류가 발생했습니다:', error);
     }
@@ -28,8 +28,6 @@ function init() {
     container.appendChild(button.render());
     container.appendChild(devotionalDisplay.render());
     app.appendChild(container);
-    
-    handleButtonClick();
 }
 
 init();

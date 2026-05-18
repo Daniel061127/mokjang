@@ -71,41 +71,35 @@ button:active {
     min-height: 200px;
 }
 
-.scripture {
+.chapter-title {
+    color: #667eea;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 20px 0 12px;
+}
+
+.verses-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    text-align: left;
     background: #f8f9fa;
     border-left: 4px solid #667eea;
-    padding: 20px;
-    margin: 20px 0;
     border-radius: 4px;
-    text-align: left;
+    padding: 16px;
 }
 
-.scripture-reference {
-    color: #667eea;
-    font-weight: 600;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.scripture-text {
+.verse {
     color: #333;
+    font-size: 15px;
     line-height: 1.8;
-    font-size: 16px;
-    font-style: italic;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
-.scripture-message {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-top: 15px;
-}
-
-.date {
-    color: #999;
+.verse-number {
+    color: #667eea;
+    font-weight: 700;
     font-size: 12px;
-    margin-top: 20px;
+    margin-right: 6px;
 }
 
 @media (max-width: 600px) {
