@@ -1,0 +1,18 @@
+{
+  "name": "daily-devotional-app",
+  "version": "1.0.0",
+  "description": "A simple application to display today's devotional.",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --outfile=dist/bundle.js",
+    "start": "npm run build && http-server -c-1 -o",
+    "dev": "http-server -c-1 -o"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0",
+    "http-server": "^14.0.0",
+    "typescript": "^4.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
