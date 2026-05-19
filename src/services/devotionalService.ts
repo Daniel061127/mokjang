@@ -18,7 +18,24 @@ const BOOK_NAMES: Record<string, string> = {
     '유': '유다서', '계': '요한계시록'
 };
 
+const BOOK_ORDER = [
+    '창', '출', '레', '민', '신', '수', '삿', '룻', '삼상', '삼하',
+    '왕상', '왕하', '대상', '대하', '스', '느', '에', '욥', '시', '잠',
+    '전', '아', '사', '렘', '애', '겔', '단', '호', '욜', '암',
+    '옵', '욘', '미', '나', '합', '습', '학', '슥', '말',
+    '마', '막', '눅', '요', '행', '롬', '고전', '고후', '갈', '엡',
+    '빌', '골', '살전', '살후', '딤전', '딤후', '딛', '몬', '히', '약',
+    '벧전', '벧후', '요일', '요이', '요삼', '유', '계'
+];
+
+export interface BookInfo {
+    abbr: string;
+    name: string;
+    chapterCount: number;
+}
+
 let cachedChapters: Record<string, Verse[]> | null = null;
+let cachedBookList: BookInfo[] | null = null;
 
 async function getChapters(): Promise<Record<string, Verse[]>> {
     if (cachedChapters) return cachedChapters;
@@ -30,7 +47,7 @@ async function getChapters(): Promise<Record<string, Verse[]>> {
     const chapters: Record<string, Verse[]> = {};
 
     for (const line of lines) {
-        const match = line.match(/^([가-힣]+\d+):(\d+)\s+(?:<[^>]+>\s+)?(.+)$/);
+        const match = line.match(/^([가-힣]+\d+):(\d+)(?:-\d+)?\s+(?:<[^>]+>\s+)?(.+)$/);
         if (!match) continue;
 
         const chapterKey = match[1];
@@ -45,18 +62,61 @@ async function getChapters(): Promise<Record<string, Verse[]>> {
     return chapters;
 }
 
+function buildChapter(key: string, chapters: Record<string, Verse[]>): Chapter {
+    const keyMatch = key.match(/^([가-힣]+)(\d+)$/);
+    const bookAbbr = keyMatch ? keyMatch[1] : key;
+    const chapterNum = keyMatch ? keyMatch[2] : '';
+    const bookName = BOOK_NAMES[bookAbbr] || bookAbbr;
+    return { title: `${bookName} ${chapterNum}장`, verses: chapters[key] || [] };
+}
+
 export const getRandomChapter = async (): Promise<Chapter> => {
     const chapters = await getChapters();
     const keys = Object.keys(chapters);
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    return buildChapter(randomKey, chapters);
+};
 
-    const keyMatch = randomKey.match(/^([가-힣]+)(\d+)$/);
-    const bookAbbr = keyMatch ? keyMatch[1] : randomKey;
-    const chapterNum = keyMatch ? keyMatch[2] : '';
-    const bookName = BOOK_NAMES[bookAbbr] || bookAbbr;
-
+export const getRandomChapterKey = async (): Promise<{ bookAbbr: string; chapterNum: number }> => {
+    const chapters = await getChapters();
+    const keys = Object.keys(chapters);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    const match = randomKey.match(/^([가-힣]+)(\d+)$/);
     return {
-        title: `${bookName} ${chapterNum}장`,
-        verses: chapters[randomKey]
+        bookAbbr: match ? match[1] : randomKey,
+        chapterNum: match ? parseInt(match[2]) : 1
     };
+};
+
+export const getBookList = async (): Promise<BookInfo[]> => {
+    if (cachedBookList) return cachedBookList;
+
+    const chapters = await getChapters();
+    const bookChapterCounts: Record<string, number> = {};
+
+    for (const key of Object.keys(chapters)) {
+        const match = key.match(/^([가-힣]+)(\d+)$/);
+        if (!match) continue;
+        const abbr = match[1];
+        const num = parseInt(match[2]);
+        if (!bookChapterCounts[abbr] || bookChapterCounts[abbr] < num) {
+            bookChapterCounts[abbr] = num;
+        }
+    }
+
+    cachedBookList = BOOK_ORDER
+        .filter(abbr => bookChapterCounts[abbr])
+        .map(abbr => ({
+            abbr,
+            name: BOOK_NAMES[abbr] || abbr,
+            chapterCount: bookChapterCounts[abbr]
+        }));
+
+    return cachedBookList;
+};
+
+export const getChapterByBookAndNum = async (bookAbbr: string, chapterNum: number): Promise<Chapter> => {
+    const chapters = await getChapters();
+    const key = `${bookAbbr}${chapterNum}`;
+    return buildChapter(key, chapters);
 };

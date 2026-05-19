@@ -6,15 +6,28 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-image: url('./assets/background.jpg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-position: center;
+    background-color: #ede9f6;
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 20px;
+    align-items: flex-start;
+    padding: 20px 14px 80px;
+}
+
+body.reader-mode {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    padding: 0;
+    align-items: stretch;
+}
+
+body.reader-mode #app {
+    height: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 #app {
@@ -22,101 +35,462 @@ body {
     max-width: 480px;
 }
 
+/* ── Container ─────────────────────────────────── */
+
 .container {
     background: white;
-    border-radius: 12px;
+    border-radius: 16px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    padding: 40px;
-    text-align: center;
+    padding: 32px 28px;
 }
 
+.reader-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 16px 14px 70px;
+}
+
+/* ── Header ────────────────────────────────────── */
+
 .header {
-    margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 28px;
 }
 
 .header h1 {
     color: #333;
-    font-size: 28px;
-    margin-bottom: 10px;
+    font-size: 26px;
+    margin-bottom: 6px;
 }
 
 .header p {
-    color: #666;
-    font-size: 14px;
+    color: #888;
+    font-size: 13px;
 }
 
-button {
+/* ── Home cards ────────────────────────────────── */
+
+.home-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.home-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px 14px 16px;
+    text-align: center;
+    border: 1px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.card-icon {
+    font-size: 30px;
+    line-height: 1;
+}
+
+.card-title {
+    font-weight: 700;
+    color: #333;
+    font-size: 15px;
+}
+
+.card-desc {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.card-desc strong {
+    color: #444;
+    font-size: 12px;
+}
+
+.praise-artist {
+    font-size: 11px;
+    color: #aaa;
+}
+
+.card-btn {
+    margin-top: 10px;
+    width: 100%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    padding: 14px 32px;
-    font-size: 16px;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.card-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.card-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+}
+
+/* ── Random result ─────────────────────────────── */
+
+.random-result {
+    margin-top: 4px;
+}
+
+/* ── Status messages ───────────────────────────── */
+
+.status-msg {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    padding: 20px 0;
+}
+
+.error-msg {
+    color: #e74c3c;
+}
+
+/* ── Back button ───────────────────────────────── */
+
+.back-btn {
+    background: none;
+    border: none;
+    color: #667eea;
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 30px;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 20px;
+    display: inline-block;
 }
 
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+.back-btn:hover {
+    text-decoration: underline;
 }
 
-button:active {
-    transform: translateY(0);
+/* ── Selector row ──────────────────────────────── */
+
+.selector-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
-.devotional-display {
-    min-height: 200px;
+.book-select {
+    flex: 2;
+    padding: 10px 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    background: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.chapter-select {
+    flex: 1;
+    padding: 10px 8px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    background: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.book-select:focus,
+.chapter-select:focus {
+    border-color: #667eea;
+}
+
+/* ── Chapter nav ───────────────────────────────── */
+
+.chapter-nav {
+    display: flex;
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.nav-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 11px 0;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.nav-btn:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+    background: #ccc;
+    cursor: default;
+    transform: none;
+}
+
+/* ── Chapter display ───────────────────────────── */
+
+.chapter-area {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
 }
 
 .chapter-title {
     color: #667eea;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
-    margin: 20px 0 12px;
+    margin: 12px 0 10px;
+    text-align: center;
 }
 
 .verses-scroll {
-    max-height: 400px;
-    overflow-y: auto;
     text-align: left;
     background: #f8f9fa;
     border-left: 4px solid #667eea;
     border-radius: 4px;
     padding: 16px;
+    margin-bottom: 4px;
+    overflow: visible;
 }
 
 .verse {
     color: #333;
     font-size: 15px;
-    line-height: 1.8;
-    margin-bottom: 8px;
+    line-height: 1.85;
+    margin-bottom: 6px;
 }
 
 .verse-number {
     color: #667eea;
     font-weight: 700;
-    font-size: 12px;
-    margin-right: 6px;
+    font-size: 11px;
+    margin-right: 5px;
+    vertical-align: super;
 }
 
-@media (max-width: 600px) {
+/* ── Music widget ──────────────────────────────── */
+
+.music-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.music-panel {
+    background: white;
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.13);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 260px;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.25s, transform 0.25s;
+}
+
+.music-top-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.music-seek-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.music-seek-bar {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: #e0d9f5;
+    outline: none;
+    cursor: pointer;
+}
+
+.music-seek-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(102, 126, 234, 0.4);
+}
+
+.music-seek-bar::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    cursor: pointer;
+}
+
+.music-time {
+    font-size: 10px;
+    color: #aaa;
+    min-width: 28px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.music-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+}
+
+.music-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.music-playlist {
+    font-size: 10px;
+    color: #aaa;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.music-song {
+    font-size: 12px;
+    color: #333;
+    font-weight: 600;
+    line-height: 1.45;
+    margin-top: 2px;
+}
+
+.play-pause-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s;
+}
+
+.play-pause-btn:hover {
+    transform: scale(1.1);
+}
+
+.music-toggle-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(102, 126, 234, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    line-height: 1;
+}
+
+.music-toggle-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.55);
+}
+
+.music-toggle-btn {
+    cursor: grab;
+}
+
+.music-toggle-btn:active {
+    cursor: grabbing;
+    transform: scale(0.97);
+}
+
+/* ── Responsive ────────────────────────────────── */
+
+@media (max-width: 480px) {
+    body {
+        padding: 16px 10px 72px;
+    }
+
     .container {
-        padding: 24px;
+        padding: 22px 16px;
+    }
+
+    .reader-container {
+        padding: 16px 14px;
     }
 
     .header h1 {
         font-size: 22px;
     }
 
-    button {
-        padding: 12px 24px;
+    .home-cards {
+        gap: 10px;
+    }
+
+    .home-card {
+        padding: 16px 10px 14px;
+    }
+
+    .verse {
         font-size: 14px;
     }
 
-    .scripture-text {
-        font-size: 14px;
+    .music-wrapper {
+        bottom: 16px;
+        right: 12px;
+    }
+
+    .music-toggle-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+
+    .music-panel {
+        max-width: 220px;
     }
 }
