@@ -258,6 +258,12 @@ body.reader-mode #app {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     min-height: 0;
+    scroll-behavior: smooth;
+    transition: opacity 0.2s ease;
+}
+
+.chapter-area.fading {
+    opacity: 0;
 }
 
 .chapter-title {

@@ -485,10 +485,15 @@ async function renderBibleReader(initialBook?: string, initialChapter?: number) 
     nextBtn.onclick = goToNext;
 
     async function loadAndRenderChapter() {
-        chapterEl.innerHTML = '<div class="status-msg">불러오는 중...</div>';
         bookSelect.value = currentBook;
         chapterSelect.value = String(currentChapter);
         updateNavButtons();
+
+        chapterEl.classList.add('fading');
+        await new Promise(r => setTimeout(r, 180));
+
+        chapterEl.innerHTML = '<div class="status-msg">불러오는 중...</div>';
+        chapterEl.scrollTop = 0;
 
         try {
             const chapter = await getChapterByBookAndNum(currentBook, currentChapter);
@@ -497,6 +502,8 @@ async function renderBibleReader(initialBook?: string, initialChapter?: number) 
         } catch {
             chapterEl.innerHTML = '<div class="status-msg error-msg">말씀을 불러오지 못했습니다.</div>';
         }
+
+        chapterEl.classList.remove('fading');
     }
 
     loadAndRenderChapter();

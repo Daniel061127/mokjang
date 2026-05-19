@@ -595,10 +595,13 @@
     prevBtn.onclick = goToPrev;
     nextBtn.onclick = goToNext;
     async function loadAndRenderChapter() {
-      chapterEl.innerHTML = '<div class="status-msg">\uBD88\uB7EC\uC624\uB294 \uC911...</div>';
       bookSelect.value = currentBook;
       chapterSelect.value = String(currentChapter);
       updateNavButtons();
+      chapterEl.classList.add("fading");
+      await new Promise((r) => setTimeout(r, 180));
+      chapterEl.innerHTML = '<div class="status-msg">\uBD88\uB7EC\uC624\uB294 \uC911...</div>';
+      chapterEl.scrollTop = 0;
       try {
         const chapter = await getChapterByBookAndNum(currentBook, currentChapter);
         renderChapterInElement(chapterEl, chapter);
@@ -606,6 +609,7 @@
       } catch {
         chapterEl.innerHTML = '<div class="status-msg error-msg">\uB9D0\uC500\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.</div>';
       }
+      chapterEl.classList.remove("fading");
     }
     loadAndRenderChapter();
   }
