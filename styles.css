@@ -256,9 +256,10 @@ body.reader-mode #app {
 .chapter-area {
     flex: 1;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     min-height: 0;
     scroll-behavior: smooth;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
     transition: opacity 0.2s ease;
 }
 
