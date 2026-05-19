@@ -493,7 +493,7 @@ async function renderBibleReader(initialBook?: string, initialChapter?: number) 
         try {
             const chapter = await getChapterByBookAndNum(currentBook, currentChapter);
             renderChapterInElement(chapterEl, chapter);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            chapterEl.scrollTop = 0;
         } catch {
             chapterEl.innerHTML = '<div class="status-msg error-msg">말씀을 불러오지 못했습니다.</div>';
         }

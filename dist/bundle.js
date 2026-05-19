@@ -602,7 +602,7 @@
       try {
         const chapter = await getChapterByBookAndNum(currentBook, currentChapter);
         renderChapterInElement(chapterEl, chapter);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        chapterEl.scrollTop = 0;
       } catch {
         chapterEl.innerHTML = '<div class="status-msg error-msg">\uB9D0\uC500\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.</div>';
       }
