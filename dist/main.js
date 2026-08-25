@@ -15,7 +15,7 @@ const container = document.createElement('div');
 container.className = 'container';
 const header = document.createElement('div');
 header.className = 'header';
-header.innerHTML = '<h1>오늘의 말씀</h1><p>오늘도 하나님의 말씀으로 살아가길 소망합니다!</p>';
+header.innerHTML = '<h1>오늘의 말씀</h1>';
 const button = new Button('오늘의 말씀 뽑기', handleButtonClick);
 const devotionalDisplay = new DevotionalDisplay();
 function handleButtonClick() {
