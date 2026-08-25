@@ -247,7 +247,7 @@ function renderHome() {
     header.className = 'header';
     header.innerHTML = `
         <h1>오늘의 말씀</h1>
-        <p>매일매일 하나님의 말씀으로 살아가길 소망합니다!</p>
+        <p>매일매일 하나님의 말씀으로 살아가길 소망합니다.</p>
     `;
     container.appendChild(header);
 
