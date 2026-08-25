@@ -399,7 +399,6 @@
     header.className = "header";
     header.innerHTML = `
         <h1>\uC624\uB298\uC758 \uB9D0\uC500</h1>
-        <p>\uC624\uB298\uB3C4 \uD558\uB098\uB2D8\uC758 \uB9D0\uC500\uC73C\uB85C \uC0B4\uC544\uAC00\uB294 \uBE61\uB2E4\uBC29 \uBAA9\uC7A5</p>
     `;
     container.appendChild(header);
     const cards = document.createElement("div");
