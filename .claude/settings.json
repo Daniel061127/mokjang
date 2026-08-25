@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /Users/daniel/daily-devotional-app pull --rebase origin main)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git pull *)",
+      "Bash(git stash *)",
+      "Bash(git rm *)"
+    ]
+  }
+}
